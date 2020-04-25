@@ -9,6 +9,10 @@
 </form>
 -->
 
-<textarea></textarea>
+<textarea name="content"></textarea>
 <input type="submit" value="check">
+<% end %>
+
+<% if flash[:notice] %>
+ <%= flash[:notice]%>
 <% end %>
