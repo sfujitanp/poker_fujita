@@ -5,8 +5,7 @@ class HomeController < ApplicationController
 
   def check
     input = params[:content]
-    flash[:notice]=input
-    redirect_to("/home/top")    
+    redirect_to("/hands/rule")    
   end 
 
 end
