@@ -4,8 +4,8 @@ class HomeController < ApplicationController
   end
 
   def check
-    input = params[:content]
-    redirect_to("/hands/rule")    
+    #input = params[:content]
+    #redirect_to("/hands/rule")
   end 
 
 end
