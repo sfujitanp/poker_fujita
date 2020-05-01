@@ -5,23 +5,35 @@ class HandsController < ApplicationController
    input = params[:content]
    cards = input.split
    i = 0
-   suit = []
-   number = []
+   suits = []
+   numbers = []
 
-   puts suit
 
    #スートと数字に分けて格納
    cards.each do|card|
-    suit[i] = card.scan(/[a-z]/)
-    number[i] = card.scan(/[^a-z]/)
+    suits[i] = card.scan(/[a-z]/)
+    numbers[i] = card.scan(/[^a-z]/)
     i += 1
    end
 
    #役判定ロジック
+   #判定結果をranksに格納していく
+   ranks = []
+
+   #①全部同じスートかどうか
+   if suits.uniq.count == 1 then
+     ranks[0] = 1
+   elsif
+      ranks[0] = 0
+   end
+
+
+   #②５枚が連続した数字か
 
 
    #画面に結果を表示
-   flash[:notice] = suit + number
+   flash[:notice] = ranks
+
    render("home/top")
 
   end
