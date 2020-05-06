@@ -14,13 +14,12 @@ class HandsController < ApplicationController
     end
 
    #判定結果の格納先を定義
-   ranks = {same_suits:0,serial_number:0,same_number:0}
-
+   ranks = {name:"", same_suits:0, serial_number:0, same_number:0}
 
    ###役判定ロジック###
    #①全部同じスートかどうか
    if suits.uniq.count == 1 then
-     ranks[:same_suites] = 1
+     ranks[:same_suits] = 1
    end
 
    #②５枚が連続した数字か
@@ -55,9 +54,29 @@ class HandsController < ApplicationController
      ranks[:same_number]=0
    end
 
+   #役名
+    if ranks[:same_suits] == 1 && ranks[:serial_number] == 1
+      ranks[:name] = "ストレートフラッシュ"
+    elsif ranks[:same_number]==5
+      ranks[:name] = "フォー・オブ・ア・カインド"
+    elsif ranks[:same_number]==4
+      ranks[:name] = "フルハウス"
+    elsif ranks[:same_suits] == 1
+      ranks[:name] = "フラッシュ"
+    elsif ranks[:serial_number] == 1
+      ranks[:name] = "ストレート"
+    elsif ranks[:same_number]==3
+      ranks[:name] = "スリー・オブ・ア・カインド"
+    elsif ranks[:same_number]==2
+      ranks[:name] = "ツーペア"
+    elsif ranks[:same_number]==1
+      ranks[:name] = "ワンペア"
+    else
+      ranks[:name] = "ハイカード"
+   end
 
    #画面に結果を表示
-   flash[:notice] = ranks
+   flash[:notice] = ranks[:name]
 
    render("home/top")
 
