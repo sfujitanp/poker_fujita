@@ -28,10 +28,33 @@ class HandsController < ApplicationController
      ranks[:serial_number] = 1
    end
 
-   #③５枚が同じ数字が何個あるか
-    if diff == [0,0,0,0] then
-      ranks[:same_number] = 1
-    end
+   #③同じ数字が何個あるか
+   same_count = diff.count(0)
+   case same_count
+   when 4
+     ranks[:same_number]=5
+   when 3
+     if diff[0] != 0 || diff[3] !=0 then
+       ranks[:same_number]=5
+     else
+       ranks[:same_number]=4
+     end
+   when 2
+     if diff[0] == 0 && diff[1] ==0 then
+       ranks[:same_number]=3
+     elsif diff[2] == 0 && diff[3] ==0 then
+       ranks[:same_number]=3
+     elsif diff[1] == 0 && diff[2] ==0 then
+       ranks[:same_number]=3
+     else
+      ranks[:same_number]=2
+     end
+   when 1
+     ranks[:same_number]=1
+   else
+     ranks[:same_number]=0
+   end
+
 
    #画面に結果を表示
    flash[:notice] = ranks
