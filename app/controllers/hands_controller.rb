@@ -1,6 +1,10 @@
 class HandsController < ApplicationController
   include Judge
 
+  def top
+  end
+
+
   #バリデーションを確認し、結果を返却する
   def rule
     card = Card.new(input)
@@ -10,7 +14,7 @@ class HandsController < ApplicationController
     else
        flash[:notice] = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11）"
     end
-   render("home/top")
+   render("hands/top")
   end
 
   private
