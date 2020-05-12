@@ -1,17 +1,18 @@
 class HandsController < ApplicationController
   include Judge
 
+  #入力情報を格納
+  def input
+    params[:content]
+  end
 
+  #バリデーションを確認し、結果を返却する
   def rule
-   #入力情報を格納
-    input = params[:content]
-
-    if  valid?(input) then
-       flash[:notice] = judge(input)
+    if  valid? then
+       flash[:notice] = judge
     else
        flash[:notice] = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11）"
-       end
+    end
    render("home/top")
-
   end
 end
