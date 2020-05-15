@@ -10,7 +10,7 @@ class HandsController < ApplicationController
     card = Card.new(input)
 
     if  card.valid? then
-       flash[:notice] = card.judge
+       flash[:notice] = card.rank_judge  #戻り値が役名
     else
        flash[:notice] = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11）"
     end
