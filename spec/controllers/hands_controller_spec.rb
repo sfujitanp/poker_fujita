@@ -1,91 +1,38 @@
-require 'rails_helper'
-# require_relative '../app/../../app/controllers/hands_controller'
-
+#require 'rails_helper'
+require_relative '../rails_helper'
+include Judge
 
 RSpec.describe HandsController, type: :controller do
 
-  it 'top画面で入力した内容がruleアクションでinputとして受け取っている' do
-
-  end
-
-  it 'cardインスタンスを作成できている' do
-
-  end
-  describe 'バリデーション' do
-
-    it '【OK】５つのカードで、全部一桁' do
-
+  describe "get #top" do
+    before do
+      get :top
     end
 
-    it '【OK】５つのカードで２桁の数字を含む' do
-
+    it '正常にレスポンスを返す' do
+      expect(response).to be_success
     end
 
-    it '【NG】カードが５枚ではない' do
-
-    end
-
-    it '【NG】区切りが半角スペースではない' do
-
-    end
-
-    it '【NG】指定以外のスート' do
-
-    end
-
-    it '【NG】指定以外の数字' do
-
-    end
-
-    it '【NG】無関係の文字' do
-
+    it '200レスポンスを返す' do
+      expect(response.status).to eq 200
     end
 
   end
 
-  it 'valid?の結果がflashに引き渡されている' do
-
-  end
-
-  describe '役判定' do
-    it 'ストレートフラッシュ' do
-
+  describe "post #rule" do
+    before do
+      post :rule
     end
 
-    it 'フォー・オブ・ア・カインド' do
-
+    it 'cardインスタンスを作成できている' do
+      card = Card.new('S3 S4 S5 S6 S7')
+      #expect(card).to be_valid
+      expect(card).not_to be_nil
     end
 
-    it 'フルハウス' do
+    it 'top画面で入力した内容をruleアクションでinputとして受け取っている' do
 
     end
-    it 'フラッシュ' do
-
-    end
-
-    it 'ストレート' do
-
-    end
-    it 'スリー・オブ・ア・カインド' do
-
-    end
-
-    it 'ツーペア' do
-
-    end
-
-    it 'ワンペア' do
-
-    end
-
-    it 'ハイカード' do
-
-    end
-
-    it '役判定結果がflashに引き渡されている' do
-
-    end
-
-  end
+   end
 
 end

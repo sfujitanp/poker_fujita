@@ -12,17 +12,18 @@ module Judge
 
 
      def rank_judge
-       suits = @input.scan(/[a-zA-Z]/)
-       numbers = @input.scan(/\d/).sort
+       suits = @input.scan(/[S,H,D,C]/)
+       numbers_s = @input.scan(/1[0-3]|[1-9]/)
+       numbers = numbers_s.map {|n| n.to_i}.sort
 
        #数字の差分を格納
        diff = []
        (0..3).each do |j|
-         diff[j] = (numbers[j+1].to_i - numbers[j].to_i)
+         diff[j] = (numbers[j+1] - numbers[j])
        end
 
        #判定結果の格納先を定義
-       rank = {name:"", same_suits:false , serial_number:false , same_number:0}
+       rank = {name:"", rank_number:"", same_suits:false , serial_number:false , same_number_count:[]}
 
        #要素① 同じスートか
        if suits.uniq.count == 1 then
@@ -34,50 +35,41 @@ module Judge
          rank[:serial_number] = true
        end
 
-       #要素③ 同じ数字の配置
-       same_count = diff.count(0)
-       case same_count
-       when 4
-         rank[:same_number]=5
-       when 3
-         if diff[0] != 0 || diff[3] !=0 then rank[:same_number]=5
-         else rank[:same_number]=4
-         end
-       when 2
-         if    diff[0] == 0 && diff[1] ==0 then rank[:same_number]=3
-         elsif diff[2] == 0 && diff[3] ==0 then rank[:same_number]=3
-         elsif diff[1] == 0 && diff[2] ==0 then rank[:same_number]=3
-         else
-           rank[:same_number]=2
-         end
-       when 1
-         rank[:same_number]=1
-       else
-         rank[:same_number]=0
-       end
+       #要素③ 同じ数字が何個ずつあるかを計算する
+       uniq_number = numbers.uniq
+       rank[:same_number_count] = uniq_number.map {|n| numbers.count(n)}.sort
 
-       #役名を定義
+       #役名と強さを格納する
        if rank[:same_suits] == true && rank[:serial_number] == true
          rank[:name] = "ストレートフラッシュ"
-       elsif rank[:same_number]==5
+         rank[:rank_number] = 1
+       elsif rank[:same_number_count]==[1,4]
          rank[:name] = "フォー・オブ・ア・カインド"
-       elsif rank[:same_number]==4
+         rank[:rank_number] = 2
+       elsif rank[:same_number_count]==[2,3]
          rank[:name] = "フルハウス"
+         rank[:rank_number] = 3
        elsif rank[:same_suits] == true
          rank[:name] = "フラッシュ"
+         rank[:rank_number] = 4
        elsif rank[:serial_number] == true
          rank[:name] = "ストレート"
-       elsif rank[:same_number]==3
+         rank[:rank_number] = 5
+       elsif rank[:same_number_count]==[1,1,3]
          rank[:name] = "スリー・オブ・ア・カインド"
-       elsif rank[:same_number]==2
+         rank[:rank_number] = 6
+       elsif rank[:same_number_count]==[1,2,2]
          rank[:name] = "ツーペア"
-       elsif rank[:same_number]==1
+         rank[:rank_number] = 7
+       elsif rank[:same_number_count]==[1,1,1,2]
          rank[:name] = "ワンペア"
+         rank[:rank_number] = 8
        else
          rank[:name] = "ハイカード"
+         rank[:rank_number] = 9
        end
-
        rank[:name]
+
      end
   end
 end
