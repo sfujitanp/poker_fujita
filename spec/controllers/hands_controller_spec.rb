@@ -20,7 +20,7 @@ RSpec.describe HandsController, type: :controller do
     before do
       post :rule
     end
-    let(:card_ok) {Card.new('S3 S4 S5 S6 S7')}
+    let(:card_ok) {Card.new("S3 S4 S5 S6 S7")}
     let(:card_ng) {Card.new('S3 S4 S5 S6')}
     it '200レスポンスを返す' do
       expect(response.status).to eq 200
@@ -29,21 +29,21 @@ RSpec.describe HandsController, type: :controller do
       expect(card_ok).to be_valid
     end
     context 'バリデーションがOK' do
+      it 'バリデーションがOKとなる' do
+        expect(card_ok.valid?).to eq true
+      end
+
       it 'ランクの結果が返却される' do
       expect(card_ok.rank_judge).to eq "ストレートフラッシュ"
-        #flash[:notice]がストレートフラッシュかどうかはどうやって検証するのか
       end
     end
     context 'バリデーションがNG' do
-      it '　valid?で引っかかる' do
-        expect(card_ng.valid?).to eq nil
-        #"5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11）"
+      it 'バリデーションがNGとなる' do
+        expect(card_ng.valid?).to eq false
       end
-
-      end
-
+    end
     it 'top画面で入力した内容をruleアクションでinputとして受け取っている' do
-
+      #実装方法不明
     end
    end
 
