@@ -23,45 +23,46 @@ module Judge
        end
 
        #判定結果の格納先を定義
-       rank = {name:"", rank_number:"", same_suits:false , serial_number:false , same_number_count:[]}
+       rank_element = {same_suits:false , serial_number:false , same_number_count:[]}
+       rank = {name:"", rank_number:""}
 
        #要素① 同じスートか
        if suits.uniq.count == 1 then
-         rank[:same_suits] = true
+         rank_element[:same_suits] = true
        end
 
        #要素② 連続した数字か
        if diff == [1,1,1,1] || diff.sort == [1,1,1,9] then
-         rank[:serial_number] = true
+         rank_element[:serial_number] = true
        end
 
        #要素③ 同じ数字が何個ずつあるかを計算する
        uniq_number = numbers.uniq
-       rank[:same_number_count] = uniq_number.map {|n| numbers.count(n)}.sort
+       rank_element[:same_number_count] = uniq_number.map {|n| numbers.count(n)}.sort
 
        #役名と強さを格納する
-       if rank[:same_suits] == true && rank[:serial_number] == true
+       if rank_element[:same_suits] == true && rank_element[:serial_number] == true
          rank[:name] = "ストレートフラッシュ"
          rank[:rank_number] = 1
-       elsif rank[:same_number_count]==[1,4]
+       elsif rank_element[:same_number_count]==[1,4]
          rank[:name] = "フォー・オブ・ア・カインド"
          rank[:rank_number] = 2
-       elsif rank[:same_number_count]==[2,3]
+       elsif rank_element[:same_number_count]==[2,3]
          rank[:name] = "フルハウス"
          rank[:rank_number] = 3
-       elsif rank[:same_suits] == true
+       elsif rank_element[:same_suits] == true
          rank[:name] = "フラッシュ"
          rank[:rank_number] = 4
-       elsif rank[:serial_number] == true
+       elsif rank_element[:serial_number] == true
          rank[:name] = "ストレート"
          rank[:rank_number] = 5
-       elsif rank[:same_number_count]==[1,1,3]
+       elsif rank_element[:same_number_count]==[1,1,3]
          rank[:name] = "スリー・オブ・ア・カインド"
          rank[:rank_number] = 6
-       elsif rank[:same_number_count]==[1,2,2]
+       elsif rank_element[:same_number_count]==[1,2,2]
          rank[:name] = "ツーペア"
          rank[:rank_number] = 7
-       elsif rank[:same_number_count]==[1,1,1,2]
+       elsif rank_element[:same_number_count]==[1,1,1,2]
          rank[:name] = "ワンペア"
          rank[:rank_number] = 8
        else
