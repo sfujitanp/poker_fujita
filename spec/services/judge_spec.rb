@@ -32,6 +32,10 @@ describe 'バリデーション' do
 
   end
 
+  it '【NG】同じカードを含む' do
+
+  end
+
   it 'valid?の結果がflashに引き渡されている' do
 
   end

@@ -7,7 +7,18 @@ module Judge
     end
 
     def valid?
-         @input =~ /[S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])/
+      regulation = /[S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])/
+      if @input =~ regulation  then
+        cards = @input.split(" ")
+        if cards.uniq == 5 && cards.uniq.count == 5 then
+          true
+        else
+          false
+        end
+      else
+        false
+      end
+      #同じカードがないかのチェックを含めたい
     end
 
 
