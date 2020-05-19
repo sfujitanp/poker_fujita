@@ -6,7 +6,7 @@ class HandsController < ApplicationController
 
 
   #バリデーションを確認し、結果を返却する
-  def rule
+  def judge
     card = Card.new(input)
 
     if  card.valid? then
