@@ -14,7 +14,7 @@ describe 'バリデーション' do
     end
   end
 
-  context 'バリデーションがOKのとき' do
+  context 'バリデーションがNGのとき' do
     it 'カードが4枚のとき' do
       card = Card.new('S3 S4 S5 S6')
       expect(card.valid?).to eq false
@@ -56,47 +56,56 @@ end
 describe '役判定' do
   it 'ストレートフラッシュ' do
     card = Card.new('S10 S11 S12 S13 S1')
-    expect(card.judge_rank).to eq "ストレートフラッシュ"
+    card.judge_rank
+    expect(card.rank_name).to eq "ストレートフラッシュ"
   end
 
   it 'フォー・オブ・ア・カインド' do
     card = Card.new('C10 D10 H10 S10 D5')
-    expect(card.judge_rank).to eq "フォー・オブ・ア・カインド"
+    card.judge_rank
+    expect(card.rank_name).to eq "フォー・オブ・ア・カインド"
   end
 
   it 'フルハウス' do
     card = Card.new('S10 H10 D10 S4 D4')
-    expect(card.judge_rank).to eq "フルハウス"
+    card.judge_rank
+    expect(card.rank_name).to eq "フルハウス"
   end
 
   it 'フラッシュ' do
     card = Card.new('H1 H12 H10 H5 H3')
-    expect(card.judge_rank).to eq "フラッシュ"
+    card.judge_rank
+    expect(card.rank_name).to eq "フラッシュ"
   end
 
   it 'ストレート' do
     card = Card.new('S8 S7 H6 H5 S4')
-    expect(card.judge_rank).to eq "ストレート"
+    card.judge_rank
+    expect(card.rank_name).to eq "ストレート"
   end
 
   it 'スリー・オブ・ア・カインド' do
     card = Card.new('S12 C12 D12 S5 C3')
-    expect(card.judge_rank).to eq "スリー・オブ・ア・カインド"
+    card.judge_rank
+    expect(card.rank_name).to eq "スリー・オブ・ア・カインド"
   end
 
   it 'ツーペア' do
     card = Card.new('H13 D13 C2 D2 H11')
-    expect(card.judge_rank).to eq "ツーペア"
+    card.judge_rank
+    expect(card.rank_name).to eq "ツーペア"
   end
 
   it 'ワンペア' do
     card = Card.new('C10 S10 S6 H4 H2')
-    expect(card.judge_rank).to eq "ワンペア"
+    card.judge_rank
+    expect(card.rank_name).to eq "ワンペア"
   end
 
   it 'ハイカード' do
     card = Card.new('D1 D10 S9 C5 C4')
-    expect(card.judge_rank).to eq "ハイカード"
+    card.judge_rank
+    expect(card.rank_name).to eq "ハイカード"
   end
 
 end
