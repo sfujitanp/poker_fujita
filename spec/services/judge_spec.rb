@@ -88,7 +88,7 @@ describe '役判定' do
 
   it 'ハイカード' do
     card = Card.new('D1 D10 S9 C5 C4')
-    expect(card.judge_rank).to eq "ハイカード"
+    expect(card.rank_name).to eq "ハイカード"
   end
 
 end

@@ -16,9 +16,9 @@ RSpec.describe HandsController, type: :controller do
     end
   end
 
-  describe "POST #rule" do
+  describe "POST #judge" do
     before do
-      post :rule
+      post :judge
     end
     let(:card_ok) {Card.new('S3 S4 S5 S6 S7')}
     let(:card_ng) {Card.new('S3 S4 S5 S6')}
@@ -37,7 +37,7 @@ RSpec.describe HandsController, type: :controller do
         expect(card_ok.valid?).to eq true
       end
       it 'ランクの結果が返却される' do
-      expect(card_ok.rank_judge).to eq "ストレートフラッシュ"
+      expect(card_ok.judge_rank).to eq "ストレートフラッシュ"
       end
     end
 
