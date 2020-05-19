@@ -16,7 +16,7 @@ module Judge
     end
 
 
-     def rank_judge
+     def judge_rank
        suits = @input.scan(/[S,H,D,C]/)
        numbers_s = @input.scan(/1[0-3]|[1-9]/)
        numbers = numbers_s.map {|n| n.to_i}.sort

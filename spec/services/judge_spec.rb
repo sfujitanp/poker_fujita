@@ -48,47 +48,47 @@ end
 describe '役判定' do
   it 'ストレートフラッシュ' do
     card = Card.new('S10 S11 S12 S13 S1')
-    expect(card.rank_judge).to eq "ストレートフラッシュ"
+    expect(card.judge_rank).to eq "ストレートフラッシュ"
   end
 
   it 'フォー・オブ・ア・カインド' do
     card = Card.new('C10 D10 H10 S10 D5')
-    expect(card.rank_judge).to eq "フォー・オブ・ア・カインド"
+    expect(card.judge_rank).to eq "フォー・オブ・ア・カインド"
   end
 
   it 'フルハウス' do
     card = Card.new('S10 H10 D10 S4 D4')
-    expect(card.rank_judge).to eq "フルハウス"
+    expect(card.judge_rank).to eq "フルハウス"
   end
 
   it 'フラッシュ' do
     card = Card.new('H1 H12 H10 H5 H3')
-    expect(card.rank_judge).to eq "フラッシュ"
+    expect(card.judge_rank).to eq "フラッシュ"
   end
 
   it 'ストレート' do
     card = Card.new('S8 S7 H6 H5 S4')
-    expect(card.rank_judge).to eq "ストレート"
+    expect(card.judge_rank).to eq "ストレート"
   end
 
   it 'スリー・オブ・ア・カインド' do
     card = Card.new('S12 C12 D12 S5 C3')
-    expect(card.rank_judge).to eq "スリー・オブ・ア・カインド"
+    expect(card.judge_rank).to eq "スリー・オブ・ア・カインド"
   end
 
   it 'ツーペア' do
     card = Card.new('H13 D13 C2 D2 H11')
-    expect(card.rank_judge).to eq "ツーペア"
+    expect(card.judge_rank).to eq "ツーペア"
   end
 
   it 'ワンペア' do
     card = Card.new('C10 S10 S6 H4 H2')
-    expect(card.rank_judge).to eq "ワンペア"
+    expect(card.judge_rank).to eq "ワンペア"
   end
 
   it 'ハイカード' do
     card = Card.new('D1 D10 S9 C5 C4')
-    expect(card.rank_judge).to eq "ハイカード"
+    expect(card.judge_rank).to eq "ハイカード"
   end
 
 end
