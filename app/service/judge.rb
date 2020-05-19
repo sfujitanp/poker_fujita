@@ -1,7 +1,7 @@
 module Judge
 
   class Card
-    attr_reader :rank_name
+    attr_reader :rank_name, :rank_number
     def initialize (input)
       @input = input
     end
@@ -29,8 +29,6 @@ module Judge
 
        #判定結果の格納先を定義
        rank_element = {same_suits:false , serial_number:false , same_number_count:[]}
-       rank = {name:"", rank_number:""}
-       @rank_name = "hoge"
 
        #要素① 同じスートか
        if suits.uniq.count == 1 then
@@ -49,34 +47,32 @@ module Judge
        #役名と強さを格納する
        if rank_element[:same_suits] == true && rank_element[:serial_number] == true
          @rank_name = "ストレートフラッシュ"
-         rank[:rank_number] = 1
+         @rank_number = 1
        elsif rank_element[:same_number_count]==[1,4]
          @rank_name = "フォー・オブ・ア・カインド"
-         rank[:rank_number] = 2
+         @rank_number = 2
        elsif rank_element[:same_number_count]==[2,3]
          @rank_name = "フルハウス"
-         rank[:rank_number] = 3
+         @rank_number = 3
        elsif rank_element[:same_suits] == true
          @rank_name = "フラッシュ"
-         rank[:rank_number] = 4
+         @rank_number = 4
        elsif rank_element[:serial_number] == true
          @rank_name = "ストレート"
-         rank[:rank_number] = 5
+         @rank_number = 5
        elsif rank_element[:same_number_count]==[1,1,3]
          @rank_name = "スリー・オブ・ア・カインド"
-         rank[:rank_number] = 6
+         @rank_number = 6
        elsif rank_element[:same_number_count]==[1,2,2]
          @rank_name = "ツーペア"
-         rank[:rank_number] = 7
+         @rank_number = 7
        elsif rank_element[:same_number_count]==[1,1,1,2]
          @rank_name = "ワンペア"
-         rank[:rank_number] = 8
+         @rank_number = 8
        else
          @rank_name = "ハイカード"
-         rank[:rank_number] = 9
+         @rank_number = 9
        end
-       #rank[:name]
-       @rank_name
 
      end
   end
