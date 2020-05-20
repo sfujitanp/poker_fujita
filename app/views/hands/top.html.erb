@@ -1,0 +1,18 @@
+<h1>Home#top</h1>
+<p>Find me in app/views/home/top.html.erb</p>
+
+<%= form_tag("/hands/judge") do %>
+
+<!-- 
+<form>
+<input type="text" name="input" size="20" maxlength="20">
+</form>
+-->
+
+<textarea name="content"></textarea>
+<input type="submit" value="check">
+<% end %>
+
+<% if flash[:notice] %>
+ <%= flash[:notice]%>
+<% end %>
