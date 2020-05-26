@@ -6,6 +6,19 @@ module Judge
       @input = input
     end
 
+    def Card.best_rank(card_instances)
+      min_rank_number = 9
+      card_instances.each do |card|
+        min_rank_number = [min_rank_number, card.rank_number].min
+      end
+
+      card_instances.each do |card|
+        if card.rank_number == min_rank_number
+          puts card.rank_name
+        end
+      end
+    end
+
     def valid?
       regulation = /[S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])/
       return false unless @input =~ regulation
