@@ -1,37 +1,40 @@
 module Judge
 
   class Card
-    attr_reader :rank_name, :rank_number, :cards
+    attr_reader :rank_name, :rank_number, :cards, :input
 
     def initialize (input)
       @input = input
     end
 
+
+
     def Card.best_rank(card_instances)
+      #最も強いランクを確認する
       min_rank_number = 9
       card_instances.each do |card|
         min_rank_number = [min_rank_number, card.rank_number].min
       end
 
-      card_instances.each do |card|
-        if card.rank_number == min_rank_number
-          card.rank_name
-        end
-      end
-
       result = []
       #error = []
 
+      #responseの体裁を整える
       card_instances.each do |card|
+        if card.rank_number == min_rank_number
+          best = "true"
+        else
+          best = "false"
+        end
         result << ({
-            "card": card.cards,
-            "hand": card.rank_name
-            #"best": card.best
+            "card": card.input,
+            "hand": card.rank_name,
+            "best": best
         })
       end
-
       hashed_result = {"result": result}
       return hashed_result
+
     end
 
     def valid?
