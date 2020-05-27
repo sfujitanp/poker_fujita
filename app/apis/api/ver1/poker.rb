@@ -1,6 +1,7 @@
 module API
   module Ver1
     class Poker < Grape::API
+      include Judge
       resource :poker do
         #
         # # GET /api/v1/poker
@@ -14,9 +15,9 @@ module API
         params do
           requires :cards, type: Array[String]
         end
-        post do
+        post :check do
 
-
+          #入力情報を格納する
           @cards=params[:cards]
 
           card_instances =[]
@@ -24,15 +25,17 @@ module API
             card_instances << Card.new(n)
           end
 
+          #バリデーションを確認し、ランクを判定する
           card_instances.each do |card|
             if card.valid?
               card.judge_rank
-              puts card.rank_name
+              card.rank_name
             else
               puts "カード内容が適切でない"
             end
           end
 
+          #最も強いカードを判定する
           Card.best_rank(card_instances)
         end
       end

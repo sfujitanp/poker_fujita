@@ -1,7 +1,8 @@
 module Judge
 
   class Card
-    attr_reader :rank_name, :rank_number
+    attr_reader :rank_name, :rank_number, :cards
+
     def initialize (input)
       @input = input
     end
@@ -14,17 +15,31 @@ module Judge
 
       card_instances.each do |card|
         if card.rank_number == min_rank_number
-          puts card.rank_name
+          card.rank_name
         end
       end
+
+      result = []
+      #error = []
+
+      card_instances.each do |card|
+        result << ({
+            "card": card.cards,
+            "hand": card.rank_name
+            #"best": card.best
+        })
+      end
+
+      hashed_result = {"result": result}
+      return hashed_result
     end
 
     def valid?
       regulation = /[S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])/
       return false unless @input =~ regulation
-      cards = @input.split(" ")
-      return false if cards.count != 5
-      return false if cards.uniq.count != 5
+      @cards = @input.split(" ")
+      return false if @cards.count != 5
+      return false if @cards.uniq.count != 5
       true
     end
 
