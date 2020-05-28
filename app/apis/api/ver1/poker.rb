@@ -3,12 +3,6 @@ module API
     class Poker < Grape::API
       include Judge
       resource :poker do
-        #
-        # # GET /api/v1/poker
-        # desc 'return cards rank'
-        # get do
-        #
-        # end
 
         #POST /api/v1/poker
         desc 'judge cards rank'
@@ -25,17 +19,7 @@ module API
             card_instances << Card.new(n)
           end
 
-          #バリデーションを確認し、ランクを判定する
-          card_instances.each do |card|
-            if card.valid?
-              card.judge_rank
-              card.rank_name
-            else
-              puts "カード内容が適切でない"
-            end
-          end
-
-          #最も強いカードを判定する
+          #バリデーションを確認し、responseを返す
           Card.best_rank(card_instances)
         end
       end

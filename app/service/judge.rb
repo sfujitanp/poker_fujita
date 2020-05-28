@@ -1,41 +1,79 @@
 module Judge
 
   class Card
-    attr_reader :rank_name, :rank_number, :cards, :input
+    attr_reader :rank_name, :rank_number, :cards, :input, :msg
 
     def initialize (input)
       @input = input
     end
 
-
-
     def Card.best_rank(card_instances)
       #最も強いランクを確認する
       min_rank_number = 9
       card_instances.each do |card|
-        min_rank_number = [min_rank_number, card.rank_number].min
+        if card.valid2?
+          card.judge_rank
+          min_rank_number = [min_rank_number, card.rank_number].min
+        end
       end
-
-      result = []
-      #error = []
 
       #responseの体裁を整える
+      result = []
+      error = []
       card_instances.each do |card|
-        if card.rank_number == min_rank_number
-          best = "true"
+        if card.valid2?
+          if card.rank_number == min_rank_number
+            best = "true"
+          else
+            best = "false"
+          end
+          result << ({
+              "card": card.input,
+              "hand": card.rank_name,
+              "best": best
+          })
         else
-          best = "false"
+          error << ({
+              "card": card.input,
+              "msg": card.msg
+          })
         end
-        result << ({
-            "card": card.input,
-            "hand": card.rank_name,
-            "best": best
-        })
       end
-      hashed_result = {"result": result}
-      return hashed_result
+
+      if error.count > 0
+        response = {"result": result, "error": error}
+      else
+        response = {"result": result}
+      end
+
+      return response
+    end
+
+
+    def valid2?
+      regulation = /[S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])/
+      @cards = @input.split(" ")
+
+      if @cards.count != 5
+        @msg = "5つのカード指定文字を半角スペース区切りで入力してください。"
+        false
+      elsif @cards.uniq.count != 5
+        @msg = "カードが重複しています"
+        false
+      elsif @input =~ regulation
+        true
+      else
+        @msg = ""
+        @cards.each_with_index do |n, i|
+          unless n =~ /[S,H,D,C](1[0-3]|[1-9])/
+            @msg << "#{i+1}番目のカード指定文字が不正です。(#{n})　"
+          end
+        end
+        false
+      end
 
     end
+
 
     def valid?
       regulation = /[S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])\ [S,H,D,C](1[0-3]|[1-9])/
