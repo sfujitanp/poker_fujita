@@ -23,9 +23,9 @@ module Judge
       card_instances.each do |card|
         if card.valid2?
           if card.rank_number == min_rank_number
-            best = "true"
+            best = true
           else
-            best = "false"
+            best = false
           end
           result << ({
               "card": card.input,
