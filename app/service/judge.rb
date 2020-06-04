@@ -40,10 +40,12 @@ module Judge
         end
       end
 
-      if error.count > 0
+      if error.count > 0 && result.count > 0
         response = {"result": result, "error": error}
-      else
+      elsif result.count > 0
         response = {"result": result}
+      else
+        response = {"error": error}
       end
 
       return response
