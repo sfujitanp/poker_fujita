@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe "Check", type: :request do
   describe "POST /api/vi/cards/check" do
-    context '有効なパラメータの場合' do
+    context '有効なパラメータの場合（同じ強度の役がない）' do
       before do
         cards = {"cards": ["H1 H3 H12 H11 H10", "H9 C9 S9 H2 C2", "C12 C3 H8 H7 D12"]}
         post '/api/v1/poker/check', params: cards
@@ -18,6 +18,31 @@ RSpec.describe "Check", type: :request do
         expect(json_body["result"][0]["card"]).to eq 'H1 H3 H12 H11 H10'
         expect(json_body["result"][0]["hand"]).to eq 'フラッシュ'
         expect(json_body["result"][0]["best"]).to eq false
+        expect(json_body["result"][1]["card"]).to eq 'H9 C9 S9 H2 C2'
+        expect(json_body["result"][1]["hand"]).to eq 'フルハウス'
+        expect(json_body["result"][1]["best"]).to eq true
+        expect(json_body["result"][2]["card"]).to eq 'C12 C3 H8 H7 D12'
+        expect(json_body["result"][2]["hand"]).to eq 'ワンペア'
+        expect(json_body["result"][2]["best"]).to eq false
+      end
+
+    end
+
+    context '有効なパラメータの場合（同じ強度の役がある）' do
+      before do
+        cards = {"cards": ["H9 C9 S9 H2 C2", "H9 C9 S9 H2 C2", "C12 C3 H8 H7 D12"]}
+        post '/api/v1/poker/check', params: cards
+      end
+
+      it 'リクエストは201 Createdとなること' do
+        expect(response.status).to eq 201
+      end
+
+      it '期待する役および最も強い手札が判定されていること' do
+        json_body = JSON.parse(response.body)
+        expect(json_body["result"][0]["card"]).to eq 'H9 C9 S9 H2 C2'
+        expect(json_body["result"][0]["hand"]).to eq 'フルハウス'
+        expect(json_body["result"][0]["best"]).to eq true
         expect(json_body["result"][1]["card"]).to eq 'H9 C9 S9 H2 C2'
         expect(json_body["result"][1]["hand"]).to eq 'フルハウス'
         expect(json_body["result"][1]["best"]).to eq true
