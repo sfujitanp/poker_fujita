@@ -9,13 +9,13 @@ class HandsController < ApplicationController
   def judge
     card = Card.new(input)
 
-    if  card.valid? then
+    if card.valid? then
       card.judge_rank
       flash[:notice] = card.rank_name
-       render("hands/top")
+      render("hands/top")
     else
-       flash[:notice] = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11）"
-       render action: "top", status: 400
+      flash[:notice] = card.msg
+      render action: "top", status: 400
     end
   end
 

@@ -20,7 +20,8 @@ module API
           end
 
           #バリデーションを確認し、responseを返す
-          Card.best_rank(card_instances)
+          Card.judge_best_rank(card_instances)
+
         end
       end
     end
